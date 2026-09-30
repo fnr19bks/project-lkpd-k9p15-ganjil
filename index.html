@@ -1,0 +1,219 @@
+<!-- ============================================ -->
+<!-- FILE: index.html                              -->
+<!-- ============================================ -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LKPD Interaktif Misi Keamanan Digital — Malware, Phishing, DoS, dan Mitigasi. SMP Negeri 19 Kota Bekasi.">
+  <meta name="theme-color" content="#1F3B73">
+  <title>LKPD Interaktif — Misi Keamanan Digital</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="logo.png" alt="Logo SMPN 19 Kota Bekasi" class="brand-logo"
+             onerror="this.style.display='none';document.getElementById('brandFallback').style.display='inline';">
+        <span id="brandFallback" class="brand-fallback" style="display:none;">🛡️</span>
+        <div class="brand-text">
+          <strong>Misi Keamanan Digital</strong>
+          <small>LKPD Interaktif · Informatika Kelas 9</small>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btnLang" class="icon-btn" aria-label="Ganti bahasa (Switch language)">🇮🇩 ID</button>
+        <button id="btnSound" class="icon-btn" aria-label="Aktifkan atau matikan suara">🔇</button>
+        <button id="btnGlosarium" class="icon-btn" aria-label="Buka glosarium">📚</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main id="app">
+
+    <!-- ====== LAYAR 1: SPLASH / MENU ====== -->
+    <section id="screen-splash" class="screen active">
+      <div class="hero">
+        <h1>🛡️ Misi Keamanan Digital</h1>
+        <p class="hero-sub" id="splashSub">
+          Selesaikan 5 misi untuk menjadi Duta Keamanan Digital!
+        </p>
+      </div>
+
+      <div class="card identitas-card">
+        <label for="inputNama">Nama Lengkap</label>
+        <input id="inputNama" type="text" placeholder="Contoh: Andi Pratama" maxlength="40" autocomplete="name">
+        <label for="selectKelas" style="margin-top:12px;">Kelas</label>
+        <select id="selectKelas">
+          <option value="">-- Pilih Kelas --</option>
+          <option>9A</option><option>9B</option><option>9C</option><option>9D</option>
+          <option>9E</option><option>9F</option><option>9G</option><option>9H</option>
+        </select>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Progres Misi</span>
+          <span id="progressText">0 / 5</span>
+        </div>
+        <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+        <div class="progress-nodes">
+          <span class="node" data-misi="1">1</span>
+          <span class="node" data-misi="2">2</span>
+          <span class="node" data-misi="3">3</span>
+          <span class="node" data-misi="4">4</span>
+          <span class="node" data-misi="5">5</span>
+        </div>
+      </div>
+
+      <div class="misi-grid">
+        <button class="misi-card" data-misi="1">
+          <span class="misi-icon">🧠</span>
+          <span class="misi-title">Misi 1</span>
+          <span class="misi-desc">Kuis Kilat</span>
+        </button>
+        <button class="misi-card" data-misi="2">
+          <span class="misi-icon">🔗</span>
+          <span class="misi-title">Misi 2</span>
+          <span class="misi-desc">Cocokkan Istilah</span>
+        </button>
+        <button class="misi-card" data-misi="3">
+          <span class="misi-icon">✅</span>
+          <span class="misi-title">Misi 3</span>
+          <span class="misi-desc">Benar atau Salah</span>
+        </button>
+        <button class="misi-card" data-misi="4">
+          <span class="misi-icon">🕵️</span>
+          <span class="misi-title">Misi 4</span>
+          <span class="misi-desc">Detektif Kasus</span>
+        </button>
+        <button class="misi-card" data-misi="5">
+          <span class="misi-icon">🛡️</span>
+          <span class="misi-title">Misi 5</span>
+          <span class="misi-desc">Checklist Mitigasi</span>
+        </button>
+      </div>
+
+      <div class="actions-row">
+        <button id="btnLihatHasil" class="btn btn-primary" disabled>🏆 Lihat Skor Akhir</button>
+        <button id="btnReset" class="btn btn-ghost">🔄 Mulai Ulang</button>
+      </div>
+    </section>
+
+    <!-- ====== LAYAR 2: MISI 1 ====== -->
+    <section id="screen-misi1" class="screen" hidden>
+      <div class="screen-head">
+        <button class="btn-back" data-back="splash">← Menu</button>
+        <h2>🧠 Misi 1 — Kuis Kilat</h2>
+        <span class="timer" id="timerMisi1">⏱ 30</span>
+      </div>
+      <div class="progress-bar small"><div id="misi1Progress" class="progress-fill"></div></div>
+      <div class="card" id="misi1Content"></div>
+    </section>
+
+    <!-- ====== LAYAR 3: MISI 2 ====== -->
+    <section id="screen-misi2" class="screen" hidden>
+      <div class="screen-head">
+        <button class="btn-back" data-back="splash">← Menu</button>
+        <h2>🔗 Misi 2 — Cocokkan Istilah</h2>
+      </div>
+      <p class="misi-instr">Klik istilah di kolom kiri, lalu klik definisi yang cocok di kolom kanan.</p>
+      <div class="match-wrap">
+        <div class="match-col" id="matchLeft"></div>
+        <div class="match-col" id="matchRight"></div>
+      </div>
+      <div class="feedback" id="matchFeedback" hidden></div>
+      <div class="actions-row">
+        <button id="btnMatchDone" class="btn btn-primary" disabled>✅ Selesai</button>
+      </div>
+    </section>
+
+    <!-- ====== LAYAR 4: MISI 3 ====== -->
+    <section id="screen-misi3" class="screen" hidden>
+      <div class="screen-head">
+        <button class="btn-back" data-back="splash">← Menu</button>
+        <h2>✅ Misi 3 — Benar atau Salah</h2>
+      </div>
+      <div class="card" id="misi3Content"></div>
+    </section>
+
+    <!-- ====== LAYAR 5: MISI 4 ====== -->
+    <section id="screen-misi4" class="screen" hidden>
+      <div class="screen-head">
+        <button class="btn-back" data-back="splash">← Menu</button>
+        <h2>🕵️ Misi 4 — Detektif Kasus</h2>
+      </div>
+      <div class="card" id="misi4Content"></div>
+    </section>
+
+    <!-- ====== LAYAR 6: MISI 5 ====== -->
+    <section id="screen-misi5" class="screen" hidden>
+      <div class="screen-head">
+        <button class="btn-back" data-back="splash">← Menu</button>
+        <h2>🛡️ Misi 5 — Checklist Mitigasi</h2>
+      </div>
+      <p class="misi-instr">Centang kebiasaan aman yang sudah kamu lakukan. Ini bukan ujian, tapi refleksi diri.</p>
+      <div class="card" id="misi5Content"></div>
+      <div class="card hasil-checklist" id="checklistResult" hidden></div>
+    </section>
+
+    <!-- ====== LAYAR 7: HASIL AKHIR ====== -->
+    <section id="screen-hasil" class="screen" hidden>
+      <div class="screen-head">
+        <button class="btn-back" data-back="splash">← Menu</button>
+        <h2>🏆 Hasil Akhir</h2>
+      </div>
+      <div class="card hasil-card" id="hasilContent"></div>
+      <div class="card refleksi-card">
+        <h3>📝 Refleksi Diri</h3>
+        <label for="ref1">1. Apa hal baru yang kamu pelajari hari ini?</label>
+        <textarea id="ref1" rows="3" placeholder="Tulis jawabanmu di sini..."></textarea>
+        <label for="ref2">2. Bagian mana yang paling sulit? Mengapa?</label>
+        <textarea id="ref2" rows="3" placeholder="Tulis jawabanmu di sini..."></textarea>
+        <label for="ref3">3. Satu kebiasaan digital apa yang akan kamu ubah?</label>
+        <textarea id="ref3" rows="3" placeholder="Tulis jawabanmu di sini..."></textarea>
+      </div>
+      <div class="actions-row">
+        <button id="btnUnduh" class="btn btn-primary">📄 Unduh Hasil (.txt)</button>
+        <button id="btnKirim" class="btn btn-secondary">📧 Salin untuk Guru</button>
+        <button id="btnUlangi" class="btn btn-ghost">🔄 Ulangi Misi</button>
+      </div>
+      <div class="badges-card card" id="badgesCard" hidden>
+        <h3>🏅 Lencana yang Kamu Dapatkan</h3>
+        <div id="badgesList"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ MODAL GLOSARIUM ============ -->
+  <div id="modalGlosarium" class="modal" hidden>
+    <div class="modal-content">
+      <div class="modal-head">
+        <h3>📚 Glosarium Istilah</h3>
+        <button id="btnCloseGlosarium" class="icon-btn" aria-label="Tutup glosarium">✖</button>
+      </div>
+      <div id="glosariumList" class="glosarium-list"></div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="app-footer">
+    LKPD Informatika Kelas 9 · Malware, Phishing, DoS, dan Mitigasi · © 2026 SMP Negeri 19 Kota Bekasi
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
